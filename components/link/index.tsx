@@ -21,6 +21,17 @@ const HeaderLink = (props: any) => {
   );
 };
 
-export const HyperLink = () => {};
+export const HyperLink = (props: any) => {
+  const { children, link, title, classList } = props;
+  return (
+    <div className='cursor-pointer'>
+      <Link href={link}>
+        <span className={`${classList}`} title={title}>
+          {children}
+        </span>
+      </Link>
+    </div>
+  );
+};
 
 export default HeaderLink;

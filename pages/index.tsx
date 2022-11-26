@@ -1,5 +1,5 @@
-import type { NextPage, InferGetStaticPropsType } from 'next'
-import Head from 'next/head'
+import type { NextPage, InferGetStaticPropsType } from 'next';
+import Head from '../components/header/head';
 import Header from '../layouts/home/header';
 // import styles from '../styles/Home.module.css';
 import { BaseLayout } from '../layouts/base-layout';
@@ -14,15 +14,7 @@ const Home: NextPage = (props) => {
   const { cars }: any = props;
   return (
     <BaseLayout>
-      <Head>
-        <title>Automart - Home</title>
-        <meta name="description" content="Advertise your car on automart" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-      </Head>
+      <Head/>
       <BgImage>
         <Header/>
         <Backdrop>
@@ -52,6 +44,13 @@ const Home: NextPage = (props) => {
   )
 }
 
-Home.getInitialProps = getCars;
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const { cars } = await getCars();
+
+  // Pass data to the page via props
+  return { props: { cars } };
+}
 
 export default Home
