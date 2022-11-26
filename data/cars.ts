@@ -8,8 +8,24 @@ export type Cars = {
 }
 
 export const getCars = async () => {
-  const { data } = await fetch(`${apiUrl}/cars`).then(result => result.json());
-  return {
-    cars: data,
+  try {
+    const { data } = await fetch(`${apiUrl}/cars`).then(result => result.json());
+    return {
+      cars: data,
+    }
+  } catch(e) {
+    console.log(e);
+    return { cars: [] };
+  }
+};
+
+export const getCarAndOwner = async (id: string) => {
+  try {
+    const result = await fetch(`${apiUrl}/cars/${id}?getOwner=true`).then(result => result.json());
+    const { data, statusCode, error } = result;
+    if (statusCode === 200) return { car: data, error: null, statusCode };
+    return { car: null, statusCode, error };
+  } catch (error) {
+    return { car: null, error };
   }
 };
